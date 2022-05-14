@@ -19,14 +19,13 @@ export class AppComponent {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {   
-    this.http.get<any>(`https://api.openweathermap.org/data/2.5/weather?lat=${ this.lat }&lon=${ this.lon }&appid=${ this.appId }`)
+    this.http.get<any>(`https://api.openweathermap.org/data/2.5/onecall?lat=${ this.lat }&lon=${ this.lon }&exclude=current,minutely,hourly,alerts&appid=${ this.appId }`)
               .subscribe(data => {
                   this.weatherData = data;
     });
 }
-
-  public isRaining(){
-    return this.rainingConditions.includes(this.weatherData.weather[0].main);
+  private isRaining(){
+    return this.rainingConditions.includes(this.weatherData.daily[0].weather[0].main);
   }
 
   public getClass(){
